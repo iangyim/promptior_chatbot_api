@@ -1,23 +1,32 @@
-import express from "express";
 import dotenv from "dotenv";
-import { getResponse } from "./getResponse.js";
+import express from "express";
 import cors from "cors";
+import { getResponse } from "./getResponse.js";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.APP_PORT || 3000;
 
 app.use((req, res, next) => {
   // Configurar los encabezados CORS adecuados
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Permitir todos los orígenes
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE"
+    "GET, POST, PUT, PATCH, DELETE" // Permitir estos métodos HTTP
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization" // Permitir estos encabezados de solicitud
   );
+  res.setHeader(
+    "Access-Control-Expose-Headers",
+    "*" // Exponer todos los encabezados en la respuesta
+  );
+  res.setHeader(
+    "Access-Control-Allow-Credentials",
+    "true" // Permitir credenciales de autenticación (cookies, tokens, etc.)
+  );
+
   next();
 });
 
