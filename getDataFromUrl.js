@@ -6,6 +6,7 @@ export const getDataFromUrl = async (url) => {
   const loader = new PuppeteerWebBaseLoader(url, {
     launchOptions: {
       headless: "new",
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // Utiliza la variable de entorno proporcionada por Vercel
     },
     async evaluate(page, browser) {
       try {
