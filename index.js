@@ -1,12 +1,28 @@
 import express from "express";
 import dotenv from "dotenv";
 import { getResponse } from "./getResponse.js";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use((req, res, next) => {
+  // Configurar los encabezados CORS adecuados
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
+
 app.use(express.json());
+app.use(cors());
 
 app.post("/promptior-chatbot", async (req, res) => {
   const { input } = req.body;
