@@ -6,7 +6,6 @@ export const getDataFromUrl = async (url) => {
   const loader = new PuppeteerWebBaseLoader(url, {
     launchOptions: {
       headless: "new",
-      userDataDir: "C:\\Users\\Usuario\\.cache\\puppeteer",
     },
     async evaluate(page, browser) {
       try {
