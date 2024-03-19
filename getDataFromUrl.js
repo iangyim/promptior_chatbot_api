@@ -1,16 +1,13 @@
-import { PlaywrightWebBaseLoader } from "langchain/document_loaders/web/playwright";
+import { PuppeteerWebBaseLoader } from "langchain/document_loaders/web/puppeteer";
 
 export const getDataFromUrl = async (url) => {
   console.log(`Haciendo la llamada a: ${url}`);
 
-  const loader = new PlaywrightWebBaseLoader(url, {
+  const loader = new PuppeteerWebBaseLoader(url, {
     launchOptions: {
-      headless: true,
+      headless: "new",
     },
-    gotoOptions: {
-      waitUntil: "networkidle",
-    },
-    async evaluate(page, browser, response) {
+    async evaluate(page, browser) {
       try {
         await page.goto(url, { waitUntil: "networkidle0" });
         const textContent = await page.evaluate(() => {
