@@ -1,16 +1,12 @@
 import { PuppeteerWebBaseLoader } from "langchain/document_loaders/web/puppeteer";
-import puppeteer from "puppeteer";
 
 export const getDataFromUrl = async (url) => {
   console.log(`Haciendo la llamada a: ${url}`);
 
-  const browser = await puppeteer.launch({
-    ignoreDefaultArgs: ["--disable-extensions"], // Aquí se especifica la bandera --disable-extensions
-    headless: "new", // Otras opciones de lanzamiento de Puppeteer
-  });
-
   const loader = new PuppeteerWebBaseLoader(url, {
-    puppeteer: browser,
+    launchOptions: {
+      headless: "new",
+    },
     async evaluate(page, browser) {
       try {
         await page.goto(url, { waitUntil: "networkidle0" });
@@ -21,14 +17,11 @@ export const getDataFromUrl = async (url) => {
         return textContent || "";
       } catch (error) {
         console.error("Ocurrió un error al cargar la página", error);
+        await browser.close();
         return "";
       }
     },
   });
 
-  const data = await loader.load();
-
-  await browser.close();
-
-  return data;
+  return await loader.load();
 };
