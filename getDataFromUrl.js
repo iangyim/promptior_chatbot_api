@@ -1,11 +1,18 @@
 import { PuppeteerWebBaseLoader } from "langchain/document_loaders/web/puppeteer";
+import puppeteer from "puppeteer";
+import * as chromium from "chromium"; // Importa el paquete chromium
 
 export const getDataFromUrl = async (url) => {
   console.log(`Haciendo la llamada a: ${url}`);
 
+  const browser = await puppeteer.launch({
+    executablePath: chromium.path, // Utiliza la propiedad path de chromium como executablePath
+    headless: "new", // Establece "headless" a true para ejecutar en modo headless
+  });
+
   const loader = new PuppeteerWebBaseLoader(url, {
     launchOptions: {
-      headless: "new",
+      browser, // Pasa el objeto del navegador Puppeteer al cargador
     },
     async evaluate(page, browser) {
       try {
@@ -23,5 +30,9 @@ export const getDataFromUrl = async (url) => {
     },
   });
 
-  return await loader.load();
+  const data = await loader.load();
+
+  await browser.close(); // Cierra el navegador después de cargar los datos
+
+  return data;
 };
