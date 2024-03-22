@@ -21,5 +21,6 @@ export const configureRetriever = async () => {
     allEmbeddings
   );
 
+  console.log(`Configurado el retriever`);
   return vectorstore.asRetriever();
 };

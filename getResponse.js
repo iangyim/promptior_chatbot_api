@@ -23,16 +23,19 @@ export const getResponse = async (input) => {
 
 Question: {input}`);
 
+  console.log(`Creada la cadena de documentos`);
   const documentChain = await createStuffDocumentsChain({
     llm: chatModel,
     prompt,
   });
 
+  console.log(`Creada la cadena de retrieval`);
   const retrievalChain = await createRetrievalChain({
     combineDocsChain: documentChain,
     retriever,
   });
 
+  console.log(`Invocada la cadena con la pregunta: ${input}`);
   const result = await retrievalChain.invoke({
     input: input,
   });
