@@ -9,30 +9,20 @@ const PORT = process.env.APP_PORT || 3000;
 
 app.use((req, res, next) => {
   // Configurar los encabezados CORS adecuados
-  res.setHeader("Access-Control-Allow-Origin", "*"); // Permitir todos los orígenes
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE" // Permitir estos métodos HTTP
+    "GET, POST, PUT, PATCH, DELETE"
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization" // Permitir estos encabezados de solicitud
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.setHeader(
-    "Access-Control-Expose-Headers",
-    "*" // Exponer todos los encabezados en la respuesta
-  );
-  res.setHeader(
-    "Access-Control-Allow-Credentials",
-    "true" // Permitir credenciales de autenticación (cookies, tokens, etc.)
-  );
-
   next();
 });
 
 app.use(express.json());
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.post("/promptior-chatbot", async (req, res) => {
@@ -44,8 +34,9 @@ app.post("/promptior-chatbot", async (req, res) => {
   }
 
   try {
-    const resultado = await getResponse(input);
-    return res.status(200).json({ resultado });
+    const result = await getResponse(input);
+
+    return res.status(200).json({ result });
   } catch (error) {
     console.error("Error al obtener la respuesta:", error);
     return res
