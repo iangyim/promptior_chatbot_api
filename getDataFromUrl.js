@@ -26,7 +26,7 @@ export const getDataFromUrl = async (url) => {
     // Configuración del loader
     const loader = new PuppeteerWebBaseLoader(url, {
       launchOptions: {
-        headless: process.env.NODE_ENV === "production" ? "new" : false,
+        headless: process.env.NODE_ENV === "production",
       },
       async evaluate(page, browser) {
         try {
