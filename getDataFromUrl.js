@@ -21,12 +21,13 @@ export const getDataFromUrl = async (url) => {
         process.env.NODE_ENV === "production"
           ? process.env.PUPPETEER_EXECUTABLE_PATH
           : puppeteer.executablePath(),
+      headless: "new",
     });
 
     // Configuración del loader
     const loader = new PuppeteerWebBaseLoader(url, {
       launchOptions: {
-        headless: process.env.NODE_ENV === "production",
+        headless: "new",
       },
       async evaluate(page, browser) {
         try {
