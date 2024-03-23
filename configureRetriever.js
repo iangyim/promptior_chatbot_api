@@ -6,7 +6,7 @@ import { getDataFromUrl } from "./getDataFromUrl.js";
 export const configureRetriever = async () => {
   const urls = [
     "https://www.promptior.ai/services",
-    "https://www.promptior.ai/about",
+    //"https://www.promptior.ai/about",
   ];
 
   const allDocs = await Promise.all(urls.map((url) => getDataFromUrl(url)));
